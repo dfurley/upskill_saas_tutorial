@@ -4,23 +4,44 @@
 </div>
 <div class="container home-signup-links">
   <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-6">
-      <div class="well">
-        <h2 class="text-center">Basic Membership</h3>
-        <h4 class="text-center">Sign up for free and get basic access to the community.</h5>
-        <br>
-        <br>
-        <%= link_to "Sign up with Basic", new_user_registration_path(plan: @basic_plan.id), class: 'btn btn-primary btn-lg btn-block' %>
+    <% if user_signed_in? %>
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <div class="well">
+          <h2 class="text-center">Your Profile</h2>
+          <% if current_user.profile %>
+            <%= link_to "Edit your profile", "#", class: 'btn btn-default btn-large btn-block' %>
+            <%= link_to "View your profile", user_path(current_user.id), class: 'btn btn-default btn-large btn-block' %>
+          <% else %>
+            <p class="text-center">Create your profile to share your information with the community.</p>
+            <%=link_to "Create your profile", new_user_profile_path(user_id: current_user.id), class: 'btn btn-default btn-large btn-block' %>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class ="col-md-6 col-sm-6 col-xs-6">
-      <div class="well">
-        <h2 class="text-center">Pro Membership</h3>
-        <h4 class="text-center">Sign up for the pro account for $10/month and get full access to all of our services!</h5>
-        <br>
-        <%= link_to "Sign up with Pro", new_user_registration_path(plan: @pro_plan.id), class: 'btn btn-success btn-lg btn-block' %>
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <div class="well">
+          <h2 class="text-center">The Community</h2>
+          <p class="text-center">Visit the community to meet other developers, entrepreneurs and investors!</p>
+          <%= link_to "Visit the community", "#", class: 'btn btn-default btn-large btn-block' %>
+        </div>
       </div>
-    </div>
+    <% else %>
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <div class="well">
+          <h2 class="text-center">Basic Membership</h3>
+          <h4 class="text-center">Sign up for free and get basic access to the community.</h5>
+          <br>
+          <br>
+          <%= link_to "Sign up with Basic", new_user_registration_path(plan: @basic_plan.id), class: 'btn btn-primary btn-lg btn-block' %>
+        </div>
+      </div>
+      <div class ="col-md-6 col-sm-6 col-xs-6">
+        <div class="well">
+          <h2 class="text-center">Pro Membership</h3>
+          <h4 class="text-center">Sign up for the pro account for $10/month and get full access to all of our services!</h5>
+          <br>
+          <%= link_to "Sign up with Pro", new_user_registration_path(plan: @pro_plan.id), class: 'btn btn-success btn-lg btn-block' %>
+        </div>
+      </div>
+    <% end %>
   </div>
-  <%= link_to "Create your profile", new_user_profile_path(user_id: current_user.id) if user_signed_in? %>
 </div>
